@@ -1,49 +1,63 @@
-document.getElementById('task-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    const taskForm = document.getElementById('task-form');
+    const taskInput = document.getElementById('task-input');
+    const prioritySelect = document.getElementById('priority-select');
+    const taskTableBody = document.querySelector('#task-table tbody');
 
-    // استرجاع بيانات المهمة
-    const taskInput = document.getElementById('task-input').value;
-    const priority = document.getElementById('priority-select').value;
+    // استرجاع المهام من Local Storage
+    const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    storedTasks.forEach(task => addTaskToTable(task));
 
-    // إنشاء صف جديد للمهمة
-    const tableBody = document.querySelector('#task-table tbody');
-    const newRow = document.createElement('tr');
+    taskForm.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    // إضافة خلية المهمة
-    const taskCell = document.createElement('td');
-    taskCell.textContent = taskInput;
-    newRow.appendChild(taskCell);
+        const task = {
+            name: taskInput.value,
+            priority: prioritySelect.value
+        };
 
-    // إضافة خلية الأولوية مع تلوينها حسب الأهمية
-    const priorityCell = document.createElement('td');
-    if (priority === 'high') {
-        priorityCell.textContent = 'مهم';
-        newRow.classList.add('priority-high');
-    } else if (priority === 'medium') {
-        priorityCell.textContent = 'متوسط';
-        newRow.classList.add('priority-medium');
-    } else {
-        priorityCell.textContent = 'عادي';
-        newRow.classList.add('priority-low');
-    }
-    newRow.appendChild(priorityCell);
-
-    // إضافة زر الحذف
-    const deleteCell = document.createElement('td');
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'حذف';
-    deleteButton.classList.add('delete-btn');
-    deleteCell.appendChild(deleteButton);
-    newRow.appendChild(deleteCell);
-
-    // إضافة الصف الجديد إلى الجدول
-    tableBody.appendChild(newRow);
-
-    // إعادة تعيين المدخلات بعد الإضافة
-    document.getElementById('task-input').value = '';
-    
-    // إضافة حدث للحذف
-    deleteButton.addEventListener('click', function() {
-        tableBody.removeChild(newRow);
+        addTaskToTable(task);
+        storedTasks.push(task); // إضافة المهمة إلى المصفوفة
+        localStorage.setItem('tasks', JSON.stringify(storedTasks)); // حفظ المهام في Local Storage
+        
+        taskInput.value = ''; // إعادة تعيين المدخلات
     });
+
+    function addTaskToTable(task) {
+        const newRow = document.createElement('tr');
+
+        const taskCell = document.createElement('td');
+        taskCell.textContent = task.name;
+        newRow.appendChild(taskCell);
+
+        const priorityCell = document.createElement('td');
+        priorityCell.textContent = task.priority === 'high' ? 'مهم' : task.priority === 'medium' ? 'متوسط' : 'عادي';
+        if (task.priority === 'high') {
+            newRow.classList.add('priority-high');
+        } else if (task.priority === 'medium') {
+            newRow.classList.add('priority-medium');
+        } else {
+            newRow.classList.add('priority-low');
+        }
+        newRow.appendChild(priorityCell);
+
+        const deleteCell = document.createElement('td');
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'حذف';
+        deleteButton.classList.add('delete-btn');
+        deleteCell.appendChild(deleteButton);
+        newRow.appendChild(deleteCell);
+
+        taskTableBody.appendChild(newRow);
+
+        deleteButton.addEventListener('click', function() {
+            taskTableBody.removeChild(newRow);
+            // حذف المهمة من Local Storage
+            const index = storedTasks.indexOf(task);
+            if (index > -1) {
+                storedTasks.splice(index, 1);
+                localStorage.setItem('tasks', JSON.stringify(storedTasks));
+            }
+        });
+    }
 });
