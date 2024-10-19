@@ -1,91 +1,49 @@
-// تحميل المهام من localStorage عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', loadTasks);
+document.getElementById('task-form').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-// إضافة المهمة الجديدة
-document.getElementById('task-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    addTask();
-});
+    // استرجاع بيانات المهمة
+    const taskInput = document.getElementById('task-input').value;
+    const priority = document.getElementById('priority-select').value;
 
-// دالة لإضافة المهمة
-function addTask() {
-    const taskName = document.getElementById('task-name').value;
-    const taskPriority = document.getElementById('task-priority').value;
+    // إنشاء صف جديد للمهمة
+    const tableBody = document.querySelector('#task-table tbody');
+    const newRow = document.createElement('tr');
 
-    const task = {
-        name: taskName,
-        priority: taskPriority
-    };
+    // إضافة خلية المهمة
+    const taskCell = document.createElement('td');
+    taskCell.textContent = taskInput;
+    newRow.appendChild(taskCell);
 
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.push(task);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-
-    document.getElementById('task-name').value = ''; // تفريغ الحقل
-    updateTable();
-}
-
-// دالة لتحميل المهام المخزنة عند فتح الصفحة
-function loadTasks() {
-    updateTable();
-}
-
-// دالة لتحديث الجدول بعد إضافة أو حذف مهمة
-function updateTable() {
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    const taskList = document.getElementById('task-list');
-
-    // تفريغ الجدول الحالي
-    taskList.innerHTML = '';
-
-    tasks.forEach((task, index) => {
-        const row = document.createElement('tr');
-        
-        // إنشاء عمود المهمة
-        const taskCell = document.createElement('td');
-        taskCell.textContent = task.name;
-        row.appendChild(taskCell);
-
-        // إنشاء عمود الأهمية
-        const priorityCell = document.createElement('td');
-        priorityCell.textContent = getPriorityText(task.priority);
-        priorityCell.setAttribute('data-priority', task.priority);
-        row.appendChild(priorityCell);
-
-        // إنشاء عمود زر الحذف
-        const deleteCell = document.createElement('td');
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'حذف';
-        deleteButton.classList.add('delete-btn');
-        deleteButton.addEventListener('click', function() {
-            deleteTask(index);
-        });
-        deleteCell.appendChild(deleteButton);
-        row.appendChild(deleteCell);
-
-        // إضافة الصف إلى الجدول
-        taskList.appendChild(row);
-    });
-}
-
-// دالة لحذف المهمة
-function deleteTask(index) {
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.splice(index, 1);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    updateTable(); // تحديث الجدول بعد الحذف
-}
-
-// دالة لتحويل قيمة الأولوية إلى نص قابل للقراءة
-function getPriorityText(priority) {
-    switch (priority) {
-        case 'high':
-            return 'مهم';
-        case 'medium':
-            return 'متوسط';
-        case 'low':
-            return 'عادي';
-        default:
-            return '';
+    // إضافة خلية الأولوية مع تلوينها حسب الأهمية
+    const priorityCell = document.createElement('td');
+    if (priority === 'high') {
+        priorityCell.textContent = 'مهم';
+        newRow.classList.add('priority-high');
+    } else if (priority === 'medium') {
+        priorityCell.textContent = 'متوسط';
+        newRow.classList.add('priority-medium');
+    } else {
+        priorityCell.textContent = 'عادي';
+        newRow.classList.add('priority-low');
     }
-}
+    newRow.appendChild(priorityCell);
+
+    // إضافة زر الحذف
+    const deleteCell = document.createElement('td');
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'حذف';
+    deleteButton.classList.add('delete-btn');
+    deleteCell.appendChild(deleteButton);
+    newRow.appendChild(deleteCell);
+
+    // إضافة الصف الجديد إلى الجدول
+    tableBody.appendChild(newRow);
+
+    // إعادة تعيين المدخلات بعد الإضافة
+    document.getElementById('task-input').value = '';
+    
+    // إضافة حدث للحذف
+    deleteButton.addEventListener('click', function() {
+        tableBody.removeChild(newRow);
+    });
+});
