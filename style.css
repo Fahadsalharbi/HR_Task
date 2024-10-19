@@ -1,0 +1,66 @@
+body {
+    font-family: 'Cairo', sans-serif;
+    text-align: right; /* محاذاة النص لليمين */
+    direction: rtl; /* اتجاه النص من اليمين إلى اليسار */
+    background-color: #f4f4f4; /* خلفية خفيفة */
+}
+
+.container {
+    max-width: 600px; /* عرض الحاوية */
+    margin: 50px auto; /* مركز الحاوية */
+    padding: 20px; /* تباعد داخلي */
+    background-color: white; /* خلفية بيضاء */
+    border-radius: 10px; /* زوايا مدورة */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+
+h1 {
+    text-align: center; /* مركز العنوان */
+    background-color: #007bff; /* لون خلفية العنوان */
+    color: white; /* لون النص */
+    padding: 10px; /* تباعد داخلي */
+    border-radius: 5px; /* زوايا مدورة */
+}
+
+button.delete-btn {
+    background-color: #e74c3c; /* لون أحمر */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button.delete-btn:hover {
+    background-color: #c0392b; /* لون أغمق عند التحويم */
+}
+
+/* تنسيقات المهام حسب الأهمية */
+.priority-high {
+    background-color: #ffcccc; /* لون خلفية للأهمية العالية */
+}
+
+.priority-medium {
+    background-color: #ffffcc; /* لون خلفية للأهمية المتوسطة */
+}
+
+.priority-low {
+    background-color: #ccffcc; /* لون خلفية للأهمية العادية */
+}
+
+/* تنسيق الجدول */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
