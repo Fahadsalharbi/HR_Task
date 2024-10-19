@@ -16,7 +16,7 @@ body {
 
 h1 {
     text-align: center; /* مركز العنوان */
-    background-color: #007bff; /* لون خلفية العنوان */
+    background-color: #fff; /* لون خلفية العنوان */
     color: white; /* لون النص */
     padding: 10px; /* تباعد داخلي */
     border-radius: 5px; /* زوايا مدورة */
