@@ -1,68 +1,22 @@
+/* تنسيق النص ليكون من اليمين إلى اليسار */
 body {
+    direction: rtl;
     font-family: 'Cairo', sans-serif;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    direction: rtl; /* لجعل النص من اليمين إلى اليسار */
-}
-
-.logo-container {
-    text-align: center;
-    margin: 20px 0;
-}
-
-.logo {
-    max-width: 150px; /* التحكم في حجم اللوجو */
-    height: auto; /* الحفاظ على نسبة العرض إلى الارتفاع */
 }
 
 .container {
-    padding: 20px;
     max-width: 600px;
-    margin: auto;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 h1 {
     text-align: center;
 }
 
-textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    resize: none;
-}
-
-select {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
+/* تنسيق الجدول */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -70,25 +24,95 @@ table {
 }
 
 th, td {
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
-    word-wrap: break-word; /* لجعل النص يلتف تلقائياً */
-    white-space: normal; /* لتمكين الالتفاف للنصوص الطويلة */
+    word-wrap: break-word; /* لجعل النص الطويل يظهر بشكل عمودي */
+    max-width: 200px; /* أقصى عرض للخلايا */
+    white-space: normal; /* السماح بلف النص الطويل */
 }
 
 th {
     background-color: #f2f2f2;
 }
 
-td[data-priority="high"] {
-    background-color: #f8d7da; /* أحمر فاتح */
+td {
+    vertical-align: top;
 }
 
-td[data-priority="medium"] {
-    background-color: #fff3cd; /* أصفر فاتح */
+/* تنسيق الأولويات */
+.priority-high {
+    background-color: #f8d7da; /* لون أحمر فاتح للأهمية العالية */
 }
 
-td[data-priority="low"] {
-    background-color: #d4edda; /* أخضر فاتح */
+.priority-medium {
+    background-color: #fff3cd; /* لون أصفر فاتح للأهمية المتوسطة */
+}
+
+.priority-low {
+    background-color: #d4edda; /* لون أخضر فاتح للأهمية المنخفضة */
+}
+
+/* زر الحذف */
+button.delete-btn {
+    background-color: #e74c3c; /* لون أحمر */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button.delete-btn:hover {
+    background-color: #c0392b; /* لون أغمق عند المرور */
+}
+
+/* تصميم الحاوية */
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+input[type="text"], select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* إضافة بعض الهوامش */
+form {
+    margin-bottom: 20px;
+}
+
+/* ضبط حجم صفحة الجوال */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    input[type="text"], select, button {
+        width: 100%;
+    }
 }
