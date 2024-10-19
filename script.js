@@ -1,29 +1,83 @@
+// تحميل المهام من localStorage عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', loadTasks);
 
-document.getElementById('task-form').addEventListener('submit', function(e) {
-    e.preventDefault(); // منع إعادة تحميل الصفحة
-
-    const taskName = document.getElementById('task-name').value.trim();
-    const taskPriority = document.getElementById('task-priority').value;
-
-    if (taskName) {
-        addTask(taskName, taskPriority);
-        this.reset(); // إعادة تعيين النموذج بعد الإرسال
-    }
+// إضافة المهمة الجديدة
+document.getElementById('task-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    addTask();
 });
 
-function addTask(name, priority) {
-    const taskList = document.getElementById('task-list');
+// دالة لإضافة المهمة
+function addTask() {
+    const taskName = document.getElementById('task-name').value;
+    const taskPriority = document.getElementById('task-priority').value;
 
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${name}</td><td data-priority="${priority}">${getPriorityLabel(priority)}</td>`;
+    const task = {
+        name: taskName,
+        priority: taskPriority
+    };
 
-    taskList.appendChild(tr);
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 
-    saveTask(name, priority);
+    document.getElementById('task-name').value = ''; // تفريغ الحقل
+    updateTable();
 }
 
-function getPriorityLabel(priority) {
+// دالة لتحميل المهام المخزنة عند فتح الصفحة
+function loadTasks() {
+    updateTable();
+}
+
+// دالة لتحديث الجدول بعد إضافة أو حذف مهمة
+function updateTable() {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const taskList = document.getElementById('task-list');
+
+    // تفريغ الجدول الحالي
+    taskList.innerHTML = '';
+
+    tasks.forEach((task, index) => {
+        const row = document.createElement('tr');
+        
+        // إنشاء عمود المهمة
+        const taskCell = document.createElement('td');
+        taskCell.textContent = task.name;
+        row.appendChild(taskCell);
+
+        // إنشاء عمود الأهمية
+        const priorityCell = document.createElement('td');
+        priorityCell.textContent = getPriorityText(task.priority);
+        priorityCell.setAttribute('data-priority', task.priority);
+        row.appendChild(priorityCell);
+
+        // إنشاء عمود زر الحذف
+        const deleteCell = document.createElement('td');
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'حذف';
+        deleteButton.classList.add('delete-btn');
+        deleteButton.addEventListener('click', function() {
+            deleteTask(index);
+        });
+        deleteCell.appendChild(deleteButton);
+        row.appendChild(deleteCell);
+
+        // إضافة الصف إلى الجدول
+        taskList.appendChild(row);
+    });
+}
+
+// دالة لحذف المهمة
+function deleteTask(index) {
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.splice(index, 1);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    updateTable(); // تحديث الجدول بعد الحذف
+}
+
+// دالة لتحويل قيمة الأولوية إلى نص قابل للقراءة
+function getPriorityText(priority) {
     switch (priority) {
         case 'high':
             return 'مهم';
@@ -34,21 +88,4 @@ function getPriorityLabel(priority) {
         default:
             return '';
     }
-}
-
-function saveTask(name, priority) {
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.push({ name, priority });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
-function loadTasks() {
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    const taskList = document.getElementById('task-list');
-
-    tasks.forEach(task => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${task.name}</td><td data-priority="${task.priority}">${getPriorityLabel(task.priority)}</td>`;
-        taskList.appendChild(tr);
-    });
 }
