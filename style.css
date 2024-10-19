@@ -1,59 +1,27 @@
-/* تنسيق النص ليكون من اليمين إلى اليسار */
 body {
-    direction: rtl;
     font-family: 'Cairo', sans-serif;
-    margin: 0;
-    padding: 0;
+    text-align: right; /* محاذاة النص لليمين */
+    direction: rtl; /* اتجاه النص من اليمين إلى اليسار */
+    background-color: #f4f4f4; /* خلفية خفيفة */
 }
 
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: 600px; /* عرض الحاوية */
+    margin: 50px auto; /* مركز الحاوية */
+    padding: 20px; /* تباعد داخلي */
+    background-color: white; /* خلفية بيضاء */
+    border-radius: 10px; /* زوايا مدورة */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* ظل خفيف */
 }
 
 h1 {
-    text-align: center;
+    text-align: center; /* مركز العنوان */
+    background-color: #007bff; /* لون خلفية العنوان */
+    color: white; /* لون النص */
+    padding: 10px; /* تباعد داخلي */
+    border-radius: 5px; /* زوايا مدورة */
 }
 
-/* تنسيق الجدول */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-    word-wrap: break-word; /* لجعل النص الطويل يظهر بشكل عمودي */
-    max-width: 200px; /* أقصى عرض للخلايا */
-    white-space: normal; /* السماح بلف النص الطويل */
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-td {
-    vertical-align: top;
-}
-
-/* تنسيق الأولويات */
-.priority-high {
-    background-color: #f8d7da; /* لون أحمر فاتح للأهمية العالية */
-}
-
-.priority-medium {
-    background-color: #fff3cd; /* لون أصفر فاتح للأهمية المتوسطة */
-}
-
-.priority-low {
-    background-color: #d4edda; /* لون أخضر فاتح للأهمية المنخفضة */
-}
-
-/* زر الحذف */
 button.delete-btn {
     background-color: #e74c3c; /* لون أحمر */
     color: white;
@@ -64,55 +32,35 @@ button.delete-btn {
 }
 
 button.delete-btn:hover {
-    background-color: #c0392b; /* لون أغمق عند المرور */
+    background-color: #c0392b; /* لون أغمق عند التحويم */
 }
 
-/* تصميم الحاوية */
-.form-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* تنسيقات المهام حسب الأهمية */
+.priority-high {
+    background-color: #ffcccc; /* لون خلفية للأهمية العالية */
+}
+
+.priority-medium {
+    background-color: #ffffcc; /* لون خلفية للأهمية المتوسطة */
+}
+
+.priority-low {
+    background-color: #ccffcc; /* لون خلفية للأهمية العادية */
+}
+
+/* تنسيق الجدول */
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
 }
 
-input[type="text"], select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 10px;
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
 }
 
-button {
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-/* إضافة بعض الهوامش */
-form {
-    margin-bottom: 20px;
-}
-
-/* ضبط حجم صفحة الجوال */
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-
-    table {
-        font-size: 14px;
-    }
-
-    input[type="text"], select, button {
-        width: 100%;
-    }
+th {
+    background-color: #f2f2f2;
 }
