@@ -4,50 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إدارة المهام</title>
-    <!-- ربط ملف CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- إضافة اللوجو أعلى الصفحة -->
-    <div class="logo-container">
-        <img src="path/to/logo.png" alt="لوجو" class="logo">
-    </div>
-
     <div class="container">
-        <h1>إدارة المهام</h1>
-        
-        <!-- نموذج إضافة المهمة -->
+        <h1>إضافة المهام</h1>
         <form id="task-form">
-            <label for="task-name">المهمة:</label>
-            <textarea id="task-name" placeholder="اكتب المهمة هنا..." required></textarea>
-
-            <label for="task-priority">أهمية المهمة:</label>
-            <select id="task-priority" required>
-                <option value="high">مهم</option>
-                <option value="medium">متوسط</option>
+            <input type="text" id="task-input" placeholder="أدخل المهمة" required>
+            <select id="priority-select">
                 <option value="low">عادي</option>
+                <option value="medium">متوسط</option>
+                <option value="high">مهم</option>
             </select>
-
             <button type="submit">إضافة المهمة</button>
         </form>
-
-        <!-- جدول عرض المهام -->
-        <table>
+        
+        <table id="task-table">
             <thead>
                 <tr>
                     <th>المهمة</th>
                     <th>الأهمية</th>
-                    <th>حذف</th> <!-- عمود جديد لزر الحذف -->
+                    <th>حذف</th>
                 </tr>
             </thead>
-            <tbody id="task-list">
-                <!-- ستضاف المهام هنا -->
+            <tbody>
+                <!-- سيتم إضافة المهام هنا -->
             </tbody>
         </table>
     </div>
 
-    <!-- ربط ملف JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
